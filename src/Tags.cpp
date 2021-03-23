@@ -16,14 +16,15 @@ namespace WNGJIA001{
     std::vector<TagStruct> readTagsFrom(char* filename){
         std::vector<TagStruct> result;
 
-        ifstream inputFile(filename);
+        std::ifstream inputFile(filename);
         if (!inputFile){
-            std::cerr << "Invalid file name!" << endl;
+            std::cerr << "Invalid file name!" << std::endl;
         }
-        while (!myfile.eof()) {
-            myfile >> i >> ws;
-            cout << "The next data item is :" <<
-                i << endl;
+        int i;
+        while (!inputFile.eof()) {
+            inputFile >> i >> std::ws;
+            std::cout << "The next data item is :" <<
+                i << std::endl;
         }
         inputFile.close();
 
