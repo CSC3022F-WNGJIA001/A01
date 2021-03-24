@@ -38,9 +38,7 @@ int main(int argc, char* argv[])
             } else if (option == "p") { // print all tags
                 printTags();
             } else if (option == "d") { // dump/write tags and data to a file called tag.txt
-                std::cout << "Enter a name for the output file (including .txt): " << std::endl;
-                std::cin >> filename;
-                dumpTagsTo(filename);
+                dumpTags();
             } else if (option == "l") { // list/print tag data for given tag
                 std::cout << "Enter the name of the tag (case sensitive): " << std::endl;
                 std::cin >> tagname;
