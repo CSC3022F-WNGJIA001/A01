@@ -9,23 +9,28 @@
 
 #include <iostream>
 #include <fstream>
+#include <stack>
 #include <string>
 #include <vector>
 
 namespace WNGJIA001 {
     // TagStruct to store information for each tag
     struct TagStruct {
-        std::string tagName;
+        std::string name;
         int quantity;
         std::string text;
     };
     // Vector of TagStructs
-    extern std::vector<TagStruct> TagVector();
+    extern std::vector<TagStruct> TagVector;
     // Methods
-    std::vector<TagStruct> readTagsFrom(char* filename);
+    void readTagsFrom(std::string fn);
     void printTags();
-    void dumpTagsTo(char* filename);
-    void listTag(TagStruct tag);
+    void dumpTags();
+    void listTag(std::string tn);
+    std::string getTagName(std::string s);
+    std::string getContentAfterTag(std::string c);
+    std::string getTextAfterTag(std::string s);
+    void addTag(std::string tn, std::string tt);
 }
 
 #endif

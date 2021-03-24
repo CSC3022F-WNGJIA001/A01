@@ -15,7 +15,8 @@ namespace WNGJIA001{
     std::vector<TagStruct> TagVector;
 
     void readTagsFrom(std::string fn){
-        std::cout << "Opening file " << fn << " ..."<< std::endl;
+        // firstly removes all elements from the vector before reading from new file
+        TagVector.clear(); 
 
         // open file
         std::ifstream inputFile(fn);
@@ -34,21 +35,18 @@ namespace WNGJIA001{
         std::string tag_text;
         std::stack<std::string> nameStack;
         std::stack<std::string> textStack;
-        do {
-            tag_name = getTagName(content);
-            content = getContentAfterTag(content);
-            tag_text = getTextAfterTag(content);
+        do { // repeat this process until content is empty
+            tag_name = getTagName(content); // read next tag in content
+            content = getContentAfterTag(content); // read content after the first tag
+            tag_text = getTextAfterTag(content); // read text before the next tag
             nameStack.push(tag_name);
             textStack.push(tag_text);
-            do {
+            do { // repeat this process until stacks empty
                 tag_name = getTagName(content);
                 if (tag_name == ("/"+nameStack.top())) { 
-                    std::cout << "*****" << tag_name << std::endl;
                     // if next tag is a closing tag for namestack.top()
                     std::string tag_n = nameStack.top();
                     std::string tag_t = textStack.top();
-                    std::cout << "****" << tag_n << std::endl;
-                    std::cout << "***" << tag_t << std::endl;
                     // remove the top elements from namestack and textstack and add the tag to vector
                     nameStack.pop();
                     textStack.pop();
@@ -74,12 +72,12 @@ namespace WNGJIA001{
     }
 
     void printTags() {
-        if (TagVector.empty()) {
+        if (TagVector.empty()) { // if empty vector, no tags to print
             std::cout << "No tags to print, select \"r\" in menu to start reading tags from a text file!" << std::endl;
         }
-        else {
-            std::cout << TagVector.size() << std::endl;
+        else { // else: vector contains element
             for(auto tagIt = TagVector.begin(); tagIt != TagVector.end(); tagIt++ ) {
+                // iterate through vector to print out data of each element/TagStruct
                 std::cout << "\"" << (*tagIt).name << "\"";
                 std::cout << "," << (*tagIt).quantity << ",";
                 std::cout << "\"" << (*tagIt).text << "\"" << std::endl;
@@ -87,12 +85,33 @@ namespace WNGJIA001{
         }
     }
 
-    void dumpTagsTo(std::string fn) {
-        std::cout << "Dump" << std::endl;
+    void dumpTags() {
+        if (TagVector.empty()) { // if empty vector, no tags to export
+            std::cout << "No tags to export, select \"r\" in menu to start reading tags from a text file!" << std::endl;
+        }
+        else { // else: vector contains element
+            std::ofstream outputFile("bin/tag.txt");
+            for(auto tagIt = TagVector.begin(); tagIt != TagVector.end(); tagIt++ ) {
+                // iterate through vector to export data of each element/TagStruct to outputFile
+                outputFile << "\"" << (*tagIt).name << "\"";
+                outputFile << "," << (*tagIt).quantity << ",";
+                outputFile << "\"" << (*tagIt).text << "\"\n";
+            }
+            // close file
+            outputFile.close();
+        }
     }
 
     void listTag(std::string tn) {
-        std::cout << "List" << std::endl;
+        std::string tagName = tn;
+        auto tagIt = std::find_if(TagVector.begin(), TagVector.end(), [&tagName](TagStruct& ts) { return ts.name == tagName; } );
+        if (tagIt != TagVector.end()) { // found a TagStruct with the Tag name
+            std::cout << "Tag name: " << (*tagIt).name << std::endl;
+            std::cout << "Number of occurrence(s) of the tag: " << (*tagIt).quantity << std::endl;
+            std::cout << "Text enclosed by the tag :" << (*tagIt).text << std::endl;
+        } else { // no TagStruct with the Tag name
+            std::cout << "Sorry, the tag you are looking for does not exist!" << std::endl;
+        }
     }
 
     std::string getTagName(std::string s) {
@@ -118,16 +137,15 @@ namespace WNGJIA001{
     }
 
     void addTag(std::string tn, std::string tt) {
-        if (TagVector.empty()) {
-            TagVector.push_back({tn, 1, tt});
-        } else {
-            for(auto tagIt = TagVector.begin(); tagIt != TagVector.end(); tagIt++ ) {
-                if((*tagIt).name == tn) { // compare tagname
-                    (*tagIt).quantity += 1;
-                    (*tagIt).text += ":";
-                    (*tagIt).text += tt;
-                }
-            }
+        std::string tagName = tn;
+        std::string tagText = tt;
+        auto tagIt = std::find_if(TagVector.begin(), TagVector.end(), [&tagName](TagStruct& ts) { return ts.name == tagName; } );
+        if (tagIt != TagVector.end()) { // found a TagStruct with the Tag name
+            (*tagIt).quantity += 1;
+            (*tagIt).text += ":";
+            (*tagIt).text += tagText;
+        } else { // no TagStruct with the Tag name; add the Tag
+                TagVector.push_back({tagName, 1, tagText});
         }
     }
 }
