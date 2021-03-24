@@ -25,5 +25,5 @@ run:
 
 # remove all the object binary files and executable file
 clean:
-	$(rm) $(BINDIR)*.o
+	$(rm) $(BINDIR)*.o $(BINDIR)*.txt
 	$(rm) $(BUILDDIR)*.exe
