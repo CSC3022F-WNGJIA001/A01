@@ -11,7 +11,9 @@
 
 namespace WNGJIA001 {
     void welcome();
+    void toContinue();
     void displayMenu();
+    void clearTerm();
 }
 
 #endif

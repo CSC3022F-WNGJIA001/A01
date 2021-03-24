@@ -23,11 +23,11 @@ namespace WNGJIA001 {
     void displayMenu() {
         // display options of the menu
         std::cout << "Please select an option from below by entering the corresponding letter:" << std::endl << std::endl;
-        std::cout << "r - read and parse an input file" << std::endl;
-        std::cout << "p - print all tags" << std::endl;
-        std::cout << "d - write tags and data to an output file" << std::endl;
-        std::cout << "l - list data for a specific tag" << std::endl;
-        std::cout << "q - quit the program" << std::endl;
+        std::cout << "r: Read and parse an input file" << std::endl;
+        std::cout << "p: Print all tags" << std::endl;
+        std::cout << "d: Dump/write tags and data to an output file" << std::endl;
+        std::cout << "l: List data for a specific tag" << std::endl;
+        std::cout << "q: Quit" << std::endl;
     }
     void clearTerm(void) {
         // clear the terminal window
