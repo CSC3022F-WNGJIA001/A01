@@ -1,8 +1,7 @@
 # Compiled Object files
-bin/*.o
-
-# Output text files
-bin/*.txt
+bin/*
+!.gitkeep
 
 # Executables
-build/*.exe
+build/*
+!.gitkeep
