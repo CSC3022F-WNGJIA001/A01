@@ -2,6 +2,6 @@
 bin/*
 !.gitkeep
 
-# Executables
+# Executable files
 build/*
 !.gitkeep
