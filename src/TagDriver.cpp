@@ -14,7 +14,6 @@
 int main(int argc, char* argv[])
 {
     using namespace WNGJIA001;
-    // using WNGJIA001::TagVector;
     
     // scope variable declaration
     std::string option;
