@@ -20,8 +20,9 @@ $(BINDIR)%.o: $(SRCDIR)%.cpp
 	$(CC) $(CFLAGS) $< -o $@ -std=c++2a
 
 # run the executable file
-run:
-	@ ./$(TARGET)
+run: $(TARGET)
+	chmod 700 $(TARGET)
+	./$(TARGET)
 
 # remove all the object binary files and executable file
 clean:
